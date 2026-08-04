@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte TI - Triaje Inteligente de Tickets</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Mesa de Ayuda TI — Triaje de Tickets</h1>
+            <p>Sistema de triaje inteligente para procesamiento de tickets de soporte</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Panel de Entrada -->
+            <section class="input-panel">
+                <h2> Entrada de Ticket </h2>
+                
+                <div class="presets-container">
+                    <span>Ejemplos rápidos:</span>
+                    <button class="btn-preset" onclick="cargarEjemplo(1)">Riesgo Físico (Impresora)</button>
+                    <button class="btn-preset" onclick="cargarEjemplo(2)">Caída de Red (Contabilidad)</button>
+                    <button class="btn-preset" onclick="cargarEjemplo(3)">Consulta Facturación</button>
+
+                </div>
+
+                <textarea id="ticketInput" placeholder="Escribe o pega aquí el ticket del usuario (correo, chat, etc.)..."></textarea>
+
+                <button id="btnProcesar" class="btn-primary" onclick="procesarTicket()">
+                    ⚡Enviar a solicitud
+                </button>
+            </section>
+
+            <!-- Panel de Salida -->
+            <section class="output-panel">
+                <div class="output-header">
+                    <h2> Detalle del Ticket Procesado</h2>
+                    <span id="statusBadge" class="badge badge-waiting">Esperando entrada...</span>
+                </div>
+
+                <!-- Métricas Rápidas -->
+                <div id="metricsBar" class="metrics-bar hidden">
+                    <div class="metric-item">
+                        <span class="label">Categoría:</span>
+                        <span id="catResult" class="val-tag">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="label">Prioridad:</span>
+                        <span id="prioResult" class="prio-tag">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="label">Usuario:</span>
+                        <span id="userResult" class="val-text">-</span>
+                    </div>
+                </div>
+
+                <!-- Visor de JSON -->
+                <div class="json-viewer-container">
+                    <button class="btn-copy" onclick="copiarJSON()">📋 Copiar Ticket</button>
+                    <pre><code id="jsonOutput">// El ticket procesado aparecerá aquí...</code></pre>
+                </div>
+            </section>
+        </main>
+    </div>
+
+
+
+    <div class="tetris-background">
+  <!-- Malla de fondo estilo arcade -->
+  <div class="grid-overlay"></div>
+
+  <!-- Piezas cayendo (puedes duplicar o ajustar posiciones) -->
+  <div class="tetromino piece-i" style="left: 10%; animation-delay: 0s; animation-duration: 9s;"></div>
+  <div class="tetromino piece-o" style="left: 25%; animation-delay: 3s; animation-duration: 12s;"></div>
+  <div class="tetromino piece-t" style="left: 42%; animation-delay: 1s; animation-duration: 8s;"></div>
+  <div class="tetromino piece-l" style="left: 58%; animation-delay: 5s; animation-duration: 11s;"></div>
+  <div class="tetromino piece-z" style="left: 73%; animation-delay: 2s; animation-duration: 10s;"></div>
+  <div class="tetromino piece-j" style="left: 88%; animation-delay: 4s; animation-duration: 13s;"></div>
+  <div class="tetromino piece-s" style="left: 18%; animation-delay: 6s; animation-duration: 9.5s;"></div>
+  <div class="tetromino piece-t" style="left: 65%; animation-delay: 7s; animation-duration: 11.5s;"></div>
+</div>
+    <script src="app.js"></script>
+</body>
+</html>

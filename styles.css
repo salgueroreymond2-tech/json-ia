@@ -1,0 +1,312 @@
+:root {
+    --bg-primary: #0f172a;
+    --bg-card: #1e293b;
+    --bg-input: #0f172a;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-blue: #38bdf8;
+    --accent-green: #22c55e;
+    --accent-red: #ef4444;
+    --accent-yellow: #f59e0b;
+    --border-color: #334155;
+    --font-mono: 'Fira Code', 'Consolas', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.app-container {
+    max-width: 1100px;
+    width: 100%;
+}
+
+.app-header {
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 16px;
+}
+
+.app-header h1 {
+    font-size: 1.5rem;
+    color: var(--accent-blue);
+}
+
+.app-header p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+.input-panel, .output-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+h2 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.presets-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.btn-preset {
+    background: var(--border-color);
+    color: var(--text-primary);
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: background 0.2s;
+}
+
+.btn-preset:hover {
+    background: var(--accent-blue);
+    color: #000;
+}
+
+textarea {
+    width: 100%;
+    height: 180px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    padding: 12px;
+    font-size: 0.95rem;
+    resize: vertical;
+}
+
+textarea:focus {
+    outline: 1px solid var(--accent-blue);
+}
+
+.btn-primary {
+    background: #0284c7;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: #0369a1;
+}
+
+.output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-waiting { background: var(--border-color); color: var(--text-secondary); }
+.badge-success { background: rgba(34, 197, 94, 0.2); color: var(--accent-green); border: 1px solid var(--accent-green); }
+
+.metrics-bar {
+    display: flex;
+    gap: 12px;
+    background: var(--bg-input);
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.metrics-bar.hidden { display: none; }
+
+.val-tag { background: var(--border-color); padding: 2px 6px; border-radius: 4px; }
+.prio-tag { padding: 2px 8px; border-radius: 4px; font-weight: bold; }
+.prio-alta { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+.prio-media { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); }
+.prio-baja { background: rgba(34, 197, 94, 0.2); color: var(--accent-green); }
+
+.json-viewer-container {
+    position: relative;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 14px;
+    flex-grow: 1;
+    min-height: 200px;
+}
+
+.btn-copy {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--border-color);
+    color: var(--text-primary);
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+pre code {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-blue);
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+/* --- Contenedor Principal del Fondo --- */
+.tetris-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0d0d1a; /* Azul retro oscuro */
+  overflow: hidden;
+  z-index: -1; /* Mantiene el fondo detrás del contenido */
+}
+
+/* --- Malla sutil tipo retícula de Tetris --- */
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* --- Base de cada pieza (cuadro principal de 20x20px) --- */
+.tetromino {
+  position: absolute;
+  top: -120px;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  animation: fall linear infinite;
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.6));
+}
+
+/* --- Formas y Colores creados con box-shadow --- */
+
+/* Pieza I (Cian) */
+.piece-i {
+  background-color: #00f0f0;
+  box-shadow: 
+    0 22px #00f0f0, 
+    0 44px #00f0f0, 
+    0 66px #00f0f0;
+}
+
+/* Pieza O (Amarillo) */
+.piece-o {
+  background-color: #f0f000;
+  box-shadow: 
+    22px 0 #f0f000, 
+    0 22px #f0f000, 
+    22px 22px #f0f000;
+}
+
+/* Pieza T (Morado) */
+.piece-t {
+  background-color: #a000f0;
+  box-shadow: 
+    -22px 0 #a000f0, 
+    22px 0 #a000f0, 
+    0 22px #a000f0;
+}
+
+/* Pieza L (Naranja) */
+.piece-l {
+  background-color: #f0a000;
+  box-shadow: 
+    0 22px #f0a000, 
+    0 44px #f0a000, 
+    22px 44px #f0a000;
+}
+
+/* Pieza J (Azul) */
+.piece-j {
+  background-color: #0000f0;
+  box-shadow: 
+    0 22px #0000f0, 
+    0 44px #0000f0, 
+    -22px 44px #0000f0;
+}
+
+/* Pieza Z (Rojo) */
+.piece-z {
+  background-color: #f00000;
+  box-shadow: 
+    22px 0 #f00000, 
+    22px 22px #f00000, 
+    44px 22px #f00000;
+}
+
+/* Pieza S (Verde) */
+.piece-s {
+  background-color: #00f000;
+  box-shadow: 
+    -22px 0 #00f000, 
+    -22px 22px #00f000, 
+    -44px 22px #00f000;
+}
+
+/* --- Animación de Caída y Rotación --- */
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(115vh) rotate(360deg);
+    opacity: 0;
+  }
+}
