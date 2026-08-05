@@ -1,0 +1,16 @@
+[
+  {
+    "username": "carlos.soporte",
+    "password": "soporte123",
+    "name": "Carlos Rodríguez",
+    "role": "analista",
+    "department": "Mesa de Ayuda TI"
+  },
+  {
+    "username": "admin.ti",
+    "password": "admin123",
+    "name": "Dra. Sofía Mendoza",
+    "role": "admin",
+    "department": "Infraestructura & Operaciones"
+  }
+]
